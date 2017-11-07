@@ -8,32 +8,14 @@
     name: 'app',
     data() {
       return {
-        // 微信授权相关信息
-        auth_config: {
-          response_type: 'auth',
-          appid: 'TEST',
-          redirect_uri: `${window.location.protocol}//${window.location.host}${window.location.pathname}#/author/{auth}`,
-          scope: 'snsapi_userinfo'
-        }
+
       }
     },
     methods: {
-      // 微信授权
-      // 注意！ 不加路由判断，则会重定向死循环
-      handleHaveToken() {
-        if(window.localStorage.getItem('auth') === null && this.$route.matched[0].name !== 'Author') {
-          // 存入访问路径，用作过度页面后跳转
-          window.localStorage.setItem('backpath', this.$route.name);
-          const {response_type, appid, redirect_uri, scope} = this.auth_config;
-          window.location.href = `http://api.mp.kfw001.com/auth/wechat/web?appid=${appid}`+
-                                `&response_type=${response_type}`+
-                                `&scope=${scope}`+
-                                `&redirect_uri=${encodeURIComponent(redirect_uri)}`;
-        }
-      }
+
     },
     mounted() {
-      this.handleHaveToken();
+
     }
   }
 </script>
@@ -59,10 +41,10 @@
     // 点击白框
     -webkit-tap-highlight-color: rgba(#fff, 0);
     // 全局背景
-    // background-color: $bgColor;
+    background-color: #f2f2f2;
     overflow-x: hidden;
     // color
-    color: $color;
+    color: #3c424a;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
