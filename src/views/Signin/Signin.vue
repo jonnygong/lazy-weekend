@@ -9,7 +9,7 @@
     <div class="signin">
       <input type="text" placeholder="请输入手机号"/>
       <input type="text" placeholder="请输入密码"/>
-      <mt-button plain size="large" class="sub">登录</mt-button>
+      <mt-button plain size="large" class="sub" @click="getListData">登录</mt-button>
     </div>
   </div>
 </template>
@@ -19,7 +19,23 @@ export default {
     data() {
         return {
 
-        }
+        } 
+    },
+    methods: {
+      async getListData() {
+      // if (this.email.trim() === '' || this.password === '') {
+      //   this.message = '用户名或密码不能为空'
+      // } else {
+        const result = await this.$http.post('userSignin', {
+            email: 'gjn',
+            password: 'gjn'
+          })
+          console.log(result)
+
+          
+      //   this.$router.go(-1)
+      // }
+    }
     }
 }
 </script>

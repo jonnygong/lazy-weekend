@@ -10,7 +10,7 @@
       <input type="text" placeholder="请输入手机号"/>
       <input type="text" placeholder="请输入密码"/>
       <input type="text" placeholder="请再次输入密码"/>
-      <mt-button plain size="large" class="sub">注册</mt-button>
+      <mt-button plain size="large" class="sub" @click="getListData">注册</mt-button>
     </div>
   </div>
 </template>
@@ -19,8 +19,23 @@
 export default {
     data() {
         return {
-
+         
         }
+    },
+    methods: {
+      async getListData() {
+      // if (this.email.trim() === '' || this.password === '') {
+      //   this.message = '用户名或密码不能为空'
+      // } else {
+        const res = await this.$http.post('userSignup', {
+            email: 'gjn1',
+            password: 'gjn1'
+          })
+          if(res === null) return
+          console.log(result)
+      //   this.$router.go(-1)
+      // }
+    }
     }
 }
 </script>
@@ -31,7 +46,7 @@ export default {
     color: #3c424a;
   }
 
-  .signup {
+  .signup { 
     width: 90%;
     display: flex;
     flex-direction: column;

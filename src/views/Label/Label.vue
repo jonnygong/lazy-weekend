@@ -55,6 +55,16 @@ export default {
             },
           ],
         }
+    },
+    methods: {
+      async getListData() {
+        let params = {
+              
+        };
+        const result = await this.$http.post('userSignin', params)
+        this,selectedList = res.params.date;
+          // console.log(result)
+      }
     }
 }
 </script>

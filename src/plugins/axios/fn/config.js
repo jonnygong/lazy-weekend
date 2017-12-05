@@ -54,12 +54,23 @@ axios.defaults.transformResponse = function _transformResponse(res) {
     });
     return null;
   }
-  // 返回object对象到response[data]
-  // console.log(res);
-  if(typeof res.status === 'boolean') {
-      if (!res.status) {
+  // // 返回object对象到response[data]
+  // // console.log(res);
+  // if(typeof res.status === 'boolean') {
+  //     if (!res.status) {
+  //       Vue.$toast({
+  //         message: res.info,
+  //         position: 'bottom',
+  //         duration: 2000
+  //       });
+  //       return null;
+  //     } else {
+  //       return res;
+  //     }
+  // } else {
+    if ( Number(res.status) !== 200) {
         Vue.$toast({
-          message: res.info,
+          message: res.errmsg,
           position: 'bottom',
           duration: 2000
         });
@@ -67,17 +78,6 @@ axios.defaults.transformResponse = function _transformResponse(res) {
       } else {
         return res;
       }
-  } else {
-    if ( Number(res.status) !== 200 && Number(res.status) !== 1107) {
-        Vue.$toast({
-          message: res.info,
-          position: 'bottom',
-          duration: 2000
-        });
-        return null;
-      } else {
-        return res;
-      }
-  }
+  // }
 
 };
