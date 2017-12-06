@@ -14,47 +14,74 @@ export default [
   {
     path: '/',
     component: Welcome,
-    name: '欢迎页'
+    name: 'Welcome',
+    meta: {
+      title: '欢迎页'
+    }
   },
   {
     path: '/home',
     component: Home,
-    name: '首页'
+    name: 'Home',
+    meta: {
+      title: '首页'
+    }
   },
   {
     path: '/label',
     component: Label,
-    name: '分类'
+    name: '分类',
+    meta: {
+      title: '分类'
+    }
   },
   {
     path: '/detail',
     component: Detail,
-    name: '文章详情'
+    name: '文章详情',
+    meta: {
+      title: '文章详情'
+    }
   },
   {
     path: '/personal',
     component: Personal,
-    name: '个人资料'
+    name: '个人资料',
+    meta: {
+      title: '个人资料'
+    }
   },
   {
     path: '/liked',
     component: Liked,
-    name: '活动收藏'
+    name: '活动收藏',
+    meta: {
+      title: '活动收藏'
+    }
   },
   {
     path: '/about',
     component: About,
-    name: '关于我们'
+    name: '关于我们',
+    meta: {
+      title: '关于我们'
+    }
   },
   {
     path: '/signin',
     component: Signin,
-    name: '登录'
+    name: 'Login',
+    meta: {
+      title: '登录'
+    }
   },
   {
     path: '/signup',
     component: Signup,
-    name: '注册'
+    name: 'Register',
+    meta: {
+      title: '注册'
+    }
   },
   {
     path: '*',

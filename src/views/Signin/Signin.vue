@@ -7,37 +7,41 @@
     </mt-header>
 
     <div class="signin">
-      <input type="text" placeholder="请输入手机号"/>
-      <input type="text" placeholder="请输入密码"/>
-      <mt-button plain size="large" class="sub" @click="getListData">登录</mt-button>
+      <input type="text" placeholder="请输入邮箱地址" v-model="formData.email"/>
+      <input type="password" placeholder="请输入密码" v-model="formData.password"/>
+      <mt-button plain size="large" class="sub" @click.native="handleLogin">登录</mt-button>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+  export default {
     data() {
-        return {
-
-        } 
+      return {
+        formData: {
+          email: 'test@test.com',
+          password: '123456',
+        }
+      }
     },
     methods: {
-      async getListData() {
-      // if (this.email.trim() === '' || this.password === '') {
-      //   this.message = '用户名或密码不能为空'
-      // } else {
-        const result = await this.$http.post('userSignin', {
-            email: 'gjn',
-            password: 'gjn'
+      async handleLogin() {
+        if (this.formData.email.trim() === '' || this.formData.password.trim() === '') {
+          this.$toast('用户名或密码不能为空')
+        }else {
+          const res = await this.$http.post('userSignin', {
+            email: this.formData.email,
+            password: this.formData.password
           })
-          console.log(result)
-
-          
-      //   this.$router.go(-1)
-      // }
+          if (res === null) return
+          sessionStorage.setItem('JWT_TOKEN', res.data.token)
+          sessionStorage.setItem('IS_LOGIN', true)
+          this.$router.push({name: 'Home'})
+          this.$toast(res.errmsg)
+        }
+      }
     }
-    }
-}
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -60,9 +64,9 @@ export default {
       /*margin: 1rem auto;*/
       /*border:1px solid #CCC;*/
       border-radius: 0.5rem;
-      background:#FFF;
-      margin:0.5rem 0;
-      padding:0.3rem;
+      background: #FFF;
+      margin: 0.5rem 0;
+      padding: 0.3rem;
       text-indent: 0.5rem;
       &:first-child {
         margin-top: 1rem;
