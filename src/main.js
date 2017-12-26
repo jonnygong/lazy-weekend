@@ -13,6 +13,7 @@ import { router, store } from '@/plugins';
 // create new Vue as app
 import App from './App.vue';
 
+
 // new vue instance
 export default new Vue({
     router,

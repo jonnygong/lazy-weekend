@@ -28,7 +28,7 @@ export default [
     }
   },
   {
-    path: '/label',
+    path: '/label/:id',
     component: Label,
     name: '分类',
     meta: {
@@ -36,7 +36,7 @@ export default [
     }
   },
   {
-    path: '/detail',
+    path: '/detail/:id',
     component: Detail,
     name: '文章详情',
     meta: {

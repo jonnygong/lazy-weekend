@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mt-header title="全部类目" class="label">
+    <mt-header :title="this.$route.params.id == 0 ? '全部分类' : titleList[this.$route.params.id]" class="label">
       <router-link to="/home" slot="left">
         <mt-button icon="back">返回</mt-button>
       </router-link>
@@ -11,10 +11,10 @@
           infinite-scroll-disabled="loading"
           infinite-scroll-distance="5">
         <li v-for="(item, index) in selectedList">
-          <img :src="item.img" :alt="item.title"/>
-          <p class="title">{{ item.title }}</p>
+          <img :src="item.cover" :alt="item.title" @click="toDetail($index,item)"/>
+          <p @click="toDetail($index,item)" class="title">{{ item.title }}</p>
           <p class="place"><span>{{ item.place }}</span>·<span>{{ item.type }}</span></p>
-          <p class="time"><span>{{ item.time }}</span><span>{{ item.like }}</span><span>{{ item.price }}</span></p>
+          <p class="time"><span>{{ item.time }}</span><span @click="addLike(item)">♡{{ item.like }}</span><span>￥{{ item.price }}</span></p>
         </li>
       </ul>
     </div>
@@ -26,50 +26,66 @@ export default {
     data() {
         return {
           selectedList: [
-            {
-              title: '一杯红酒，一部电影，把我的故事讲给懂的人听！',
-              img: 'http://dummyimage.com/1745x492/e3c933',
-              place: '温妮红酒线下体验店',
-              type: '主题聚会',
-              time: '每周五 19：30',
-              like: '♡21',
-              price: '￥68',
-            },
-            {
-              title: '一杯红酒，一部电影，把我的故事讲给懂的人听！',
-              img: 'http://dummyimage.com/1745x492/e3c933',
-              place: '温妮红酒线下体验店',
-              type: '主题聚会',
-              time: '每周五 19：30',
-              like: '♡21',
-              price: '￥68',
-            },
-            {
-              title: '一杯红酒，一部电影，把我的故事讲给懂的人听！',
-              img: 'http://dummyimage.com/1745x492/e3c933',
-              place: '温妮红酒线下体验店',
-              type: '主题聚会',
-              time: '每周五 19：30',
-              like: '♡21',
-              price: '￥68',
-            },
+            
           ],
+          titleList: {},
+          // list: []
         }
     },
     methods: {
-      async getListData() {
+      async getTagData() {
         let params = {
-              
+          
         };
-        const result = await this.$http.post('userSignin', params)
-        this,selectedList = res.params.date;
-          // console.log(result)
-      }
-    }
+        const res = await this.$http.get("tagList", params);
+        if (res === null) return;
+        res.data.forEach(item => {
+          this.titleList[item.id] = item.type
+   
+        });
+        // this.titleList.unshift({type: "全部分类", id: 0, icon: "fa fa-snowflake-o fa-3x", pid: 0});
+        // this.list = res.data.list;
+      },
+      async getListData() {
+       
+        let params = {
+          type: this.$route.params.id,
+          area: this.$route.params.area,
+          popular: this.$route.params.popular,
+          keyword: this.$route.params.keyword,
+        };
+        const res = await this.$http.get("articleList",  this.$route.params.id == 0 ? {} : params);
+        if (res === null) return;
+        this.selectedList = res.data;
+      },
+      
+      toDetail(index, item) {
+        this.$router.push(`/detail/${item.id}`);
+        console.log(item.id)
+    },
+     async addLike(item) {
+      let params = {
+        article_id: item.id
+      };
+
+      const res = await this.$http.get(`addLike`, params);
+
+      if (res === null) return;
+      this.getListData();
+      // this.$message({
+      //   message: "喜欢成功",
+      //   type: "success"
+      // });
+    },
+    },
+    mounted() {
+    this.getTagData();
+    this.getListData();
+  }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .label {
     background-color: #fff;
     color: #3c424a;
